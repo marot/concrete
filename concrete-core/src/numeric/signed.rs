@@ -39,6 +39,9 @@ pub trait SignedInteger:
     /// Returns the casting of the current value to the unsigned type of the same size.
     fn into_unsigned(self) -> Self::Unsigned;
 
+    // Raises the value to a given power
+    fn pow(self, pow: u32) -> Self;
+
     /// Returns a bit representation of the integer, where blocks of length `block_length` are
     /// separated by whitespaces to increase the readability.
     fn to_bits_string(&self, block_length: usize) -> String;
@@ -57,6 +60,9 @@ macro_rules! implement {
             type Unsigned = $UnsignedType;
             fn into_unsigned(self) -> Self::Unsigned {
                 Self::Unsigned::cast_from(self)
+            }
+            fn pow(self, pow: u32) -> Self {
+                self.pow(pow)
             }
             fn to_bits_string(&self, break_every: usize) -> String {
                 let mut strn = match <$Type as Numeric>::BITS {
